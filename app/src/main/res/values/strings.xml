@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">BookLibrary</string>
+    <string name="user_name">Tên đăng nhập</string>
+    <string name="password">Mật khẩu</string>
+    <string name="login">Đăng nhập</string>
+    <string name="forgot_password">Quên mật khẩu?</string>
+</resources>
