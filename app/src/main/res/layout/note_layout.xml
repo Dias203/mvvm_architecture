@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:padding="16dp">
 
-            <!-- Note Title -->
+
             <TextView
                 android:id="@+id/tvNoteTitle"
                 android:layout_width="0dp"
@@ -39,7 +39,7 @@
                 app:layout_constraintHorizontal_weight="1"
                 app:layout_constrainedHeight="true" />
 
-            <!-- Small Color View -->
+
             <View
                 android:id="@+id/ib_color"
                 android:layout_width="10dp"
@@ -49,7 +49,7 @@
                 app:layout_constraintBottom_toBottomOf="@id/tvNoteTitle"
                 app:layout_constraintEnd_toEndOf="parent" />
 
-            <!-- Note Body -->
+
             <TextView
                 android:id="@+id/tvNoteBody"
                 android:layout_width="0dp"
@@ -64,7 +64,7 @@
                 app:layout_constraintHorizontal_weight="1"
                 android:layout_marginTop="16dp" />
 
-            <!-- Checkbox -->
+
             <CheckBox
                 android:id="@+id/checkboxSelect"
                 android:layout_width="@dimen/_20sdp"
