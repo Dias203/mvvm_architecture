@@ -10,52 +10,48 @@
         android:id="@+id/cardView2"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_margin="@dimen/_12sdp"
         android:background="@color/white"
-        app:cardCornerRadius="5dp"
-        app:cardElevation="8dp"
+        app:cardCornerRadius="@dimen/_5sdp"
+        app:cardElevation="@dimen/_8sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="@dimen/_20sdp">
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/edtNoteTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:ems="10"
-                android:hint="Type your title"
+                android:hint="@string/type_your_title"
                 android:inputType="text"
                 android:textColor="@color/black"
                 android:textColorHint="#808080"
-                android:textSize="20sp"
+                android:textSize="@dimen/_14sdp"
                 android:textStyle="bold" />
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/edtNoteBody"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/_14sdp"
                 android:background="@android:color/transparent"
                 android:ems="10"
                 android:gravity="start|top"
-                android:hint="Type something..."
+                android:hint="@string/type_body"
                 android:inputType="textMultiLine"
                 android:textColor="@color/black"
                 android:textColorHint="#808080"
-                android:textSize="16sp" />
-        </LinearLayout>
+                android:textSize="@dimen/_12sdp" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.cardview.widget.CardView>
 
 
@@ -65,7 +61,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_16sdp"
         android:elevation="@dimen/_10sdp"
-        android:text="SAVE"
+        android:text="@string/save"
         android:textSize="@dimen/_12sdp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

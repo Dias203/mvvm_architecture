@@ -4,4 +4,8 @@
     <string name="password">Mật khẩu</string>
     <string name="login">Đăng nhập</string>
     <string name="forgot_password">Quên mật khẩu?</string>
+    <string name="tv_main">No notes available!!!</string>
+    <string name="type_your_title">Type your title</string>
+    <string name="type_body">Type something...</string>
+    <string name="save">SAVE</string>
 </resources>

@@ -20,7 +20,6 @@ class UpdateNoteActivity : AppCompatActivity(), AndroidScopeComponent {
     lateinit var binding: ActivityUpdateNoteBinding
     lateinit var currentNote: Note
     override val scope: Scope by activityScope()
-
     val noteViewModel: NoteViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,7 +1,5 @@
 package com.example.booklibrary.ui.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.booklibrary.data.model.Note
@@ -9,7 +7,6 @@ import com.example.booklibrary.data.repository.NoteRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
 class NoteViewModel(private val noteRepository: NoteRepository) : ViewModel(), KoinComponent {
     //private val noteRepository: NoteRepository by inject()
@@ -25,6 +22,19 @@ class NoteViewModel(private val noteRepository: NoteRepository) : ViewModel(), K
             noteRepository.deleteNote(note)
         }
     }
+
+    fun deleteNotesSelected(notes: List<Note>) {
+        viewModelScope.launch(Dispatchers.IO) {
+            noteRepository.deleteNotesSelected(notes)
+        }
+    }
+
+    fun deleteAllNotes() {
+        viewModelScope.launch(Dispatchers.IO) {
+            noteRepository.deleteAllNotes()
+        }
+    }
+
 
     fun updateNote(note: Note) {
         viewModelScope.launch(Dispatchers.IO) {

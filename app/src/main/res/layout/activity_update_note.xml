@@ -32,31 +32,31 @@
                     android:layout_gravity="end"
                     android:src="@drawable/ic_delete" />
 
-                <EditText
+                <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/edtNoteTitleUpdate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
                     android:ems="10"
-                    android:hint="Type your title"
+                    android:hint="@string/type_your_title"
                     android:textColor="@color/black"
                     android:textColorHint="#808080"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/_14sdp"
                     android:textStyle="bold" />
 
-                <EditText
+                <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/edtNoteBodyUpdate"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="@dimen/_15sdp"
                     android:background="@android:color/transparent"
                     android:ems="10"
                     android:gravity="start|top"
-                    android:hint="Type something..."
+                    android:hint="@string/type_body"
                     android:inputType="textMultiLine"
                     android:textColor="@color/black"
                     android:textColorHint="#808080"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/_12sdp" />
 
 
             </LinearLayout>
@@ -69,15 +69,14 @@
         android:id="@+id/fabDone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
-        android:clickable="true"
+        android:layout_marginEnd="@dimen/_24sdp"
+        android:layout_marginBottom="@dimen/_24sdp"
         android:src="@drawable/ic_done"
         android:tintMode="@color/white"
-        app:borderWidth="0dp"
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="ContentDescription" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

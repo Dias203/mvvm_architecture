@@ -10,8 +10,10 @@ import com.example.booklibrary.ui.view.extensions.setClick
 import com.example.booklibrary.ui.view.extensions.setUI
 import com.example.booklibrary.ui.viewmodel.NoteViewModel
 import com.example.notetakingapp.adapter.NoteAdapter
+import org.koin.android.ext.android.inject
 import org.koin.android.scope.AndroidScopeComponent
 import org.koin.androidx.scope.activityScope
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.scope.Scope
 
 class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener, AndroidScopeComponent {
@@ -19,8 +21,8 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener, Androi
     lateinit var binding: ActivityMainBinding
     override val scope: Scope by activityScope()
 
-    val noteViewModel: NoteViewModel by scope.inject()
-    val noteAdapter: NoteAdapter by scope.inject()
+    val noteViewModel: NoteViewModel by viewModel()
+    val noteAdapter: NoteAdapter by inject()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

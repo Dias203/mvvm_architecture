@@ -9,6 +9,11 @@ import org.koin.core.component.inject
 class NoteRepository(private val db: NoteDatabase) : KoinComponent {
     fun insertNote(note: Note) = db.getNoteDao().insertNote(note)
     fun deleteNote(note: Note) = db.getNoteDao().deleteNote(note)
+
+    fun deleteNotesSelected(notes: List<Note>) = db.getNoteDao().deleteNotesSelected(notes)
+
+    fun deleteAllNotes() = db.getNoteDao().deleteAllNotes()
+
     fun updateNote(note: Note) {
         Log.d("NoteRepository", "Updating note: $note")
         db.getNoteDao().updateNote(note)

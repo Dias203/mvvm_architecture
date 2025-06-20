@@ -57,9 +57,26 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
             }
             it.context.startActivity(intent)
         }
+
+        holder.itemBinding.checkboxSelect.setOnCheckedChangeListener(null)
+        holder.itemBinding.checkboxSelect.isChecked = currentNote.isSelected
+        holder.itemBinding.checkboxSelect.setOnCheckedChangeListener { _, isChecked ->
+            currentNote.isSelected = isChecked
+        }
     }
 
     override fun getItemCount(): Int {
         return differ.currentList.size
+    }
+
+    fun getAllNotesSelected() : List<Note> {
+        return differ.currentList.filter { it.isSelected }
+    }
+
+    fun selectAll(isSelected: Boolean) {
+        val updatedList = differ.currentList.map {
+            it.copy(isSelected = isSelected)
+        }
+        differ.submitList(updatedList)
     }
 }

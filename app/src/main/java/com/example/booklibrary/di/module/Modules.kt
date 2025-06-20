@@ -24,20 +24,20 @@ val appModule = module {
 
     // Scope cho MainActivity
     scope<MainActivity> {
-        scoped<NoteRepository> { NoteRepository(get()) }
-        scoped<NoteViewModel> { NoteViewModel(get()) }
-        scoped<NoteAdapter> { NoteAdapter() }
+        factory { NoteRepository(get()) }
+        factory { NoteViewModel(get()) }
+        factory { NoteAdapter() }
     }
 
     // Scope cho UpdateNoteActivity
     scope<UpdateNoteActivity> {
-        scoped<NoteRepository> { NoteRepository(get()) }
-        scoped<NoteViewModel> { NoteViewModel(get()) }
+        factory { NoteRepository(get()) }
+        factory { NoteViewModel(get()) }
     }
 
     // Scope cho NewNoteActivity
     scope<NewNoteActivity> {
-        scoped<NoteRepository> { NoteRepository(get()) }
-        scoped<NoteViewModel> { NoteViewModel(get()) }
+        factory { NoteRepository(get()) }
+        factory { NoteViewModel(get()) }
     }
 }
