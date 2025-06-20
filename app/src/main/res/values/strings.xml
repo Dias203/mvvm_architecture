@@ -8,4 +8,7 @@
     <string name="type_your_title">Type your title</string>
     <string name="type_body">Type something...</string>
     <string name="save">SAVE</string>
+    <string name="splash_text">Chào mừng đến với ứng dụng NOTE</string>
+    <string name="delete_note">Delete Note</string>
+    <string name="edit_note">Edit Note</string>
 </resources>

@@ -44,12 +44,24 @@ fun MainActivity.setClick() {
     }
 
     binding.fabDeleteAllNote.setOnClickListener {
-        //deleteAllNotes()
-        deleteNotesSelected()
+        deleteAllNotes()
+        //deleteNotesSelected()
     }
 
     binding.tickAllNote.setOnCheckedChangeListener { _, isChecked ->
         noteAdapter.selectAll(isChecked)
+    }
+
+    noteAdapter.onDeleteNote = { note ->
+        AlertDialog.Builder(this).apply {
+            setTitle("Xóa ghi chú")
+            setMessage("Bạn có chắc chắn muốn xóa ghi chú này?")
+            setPositiveButton("Xóa") { _, _ ->
+                noteViewModel.deleteNote(note)
+                Toast.makeText(this@setClick, "Đã xóa ghi chú", Toast.LENGTH_SHORT).show()
+            }
+            setNegativeButton("Hủy", null)
+        }.show()
     }
 
 }

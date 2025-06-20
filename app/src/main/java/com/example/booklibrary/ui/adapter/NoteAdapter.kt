@@ -3,10 +3,13 @@ package com.example.notetakingapp.adapter
 import android.content.Intent
 import android.graphics.Color
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.booklibrary.R
 import com.example.booklibrary.data.model.Note
 import com.example.booklibrary.databinding.NoteLayoutBinding
 import com.example.booklibrary.ui.view.screens.UpdateNoteActivity
@@ -27,6 +30,7 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
     }
 
     val differ = AsyncListDiffer(this, differCallBack)
+    var onDeleteNote: ((Note) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         return NoteViewHolder(
@@ -58,12 +62,39 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
             it.context.startActivity(intent)
         }
 
-        holder.itemBinding.checkboxSelect.setOnCheckedChangeListener(null)
+        /*holder.itemBinding.checkboxSelect.setOnCheckedChangeListener(null)
         holder.itemBinding.checkboxSelect.isChecked = currentNote.isSelected
         holder.itemBinding.checkboxSelect.setOnCheckedChangeListener { _, isChecked ->
             currentNote.isSelected = isChecked
+        }*/
+
+        holder.itemBinding.btnMore.setOnClickListener {
+            showPopupMenu(it, currentNote)
         }
     }
+
+    private fun showPopupMenu(view: View, currentNote: Note) {
+        val popup = PopupMenu(view.context, view)
+        popup.menuInflater.inflate(R.menu.menu_note, popup.menu)
+        popup.setOnMenuItemClickListener { item ->
+            when(item.itemId) {
+                R.id.action_delete -> {
+                    onDeleteNote?.let { it(currentNote) }
+                    true
+                }
+                R.id.action_edit -> {
+                    val intent = Intent(view.context, UpdateNoteActivity::class.java).apply {
+                        putExtra("note", currentNote)
+                    }
+                    view.context.startActivity(intent)
+                    true
+                }
+                else -> false
+            }
+        }
+        popup.show()
+    }
+
 
     override fun getItemCount(): Int {
         return differ.currentList.size
