@@ -76,7 +76,7 @@ fun MainActivity.deleteNotesSelected() {
     }
 
     val builder = AlertDialog.Builder(this)
-    builder.setTitle("Delete All Notes")
+    builder.setTitle("Delete Selected Notes")
     builder.setMessage("Are you sure you want to delete the selected notes?")
     builder.setPositiveButton("Yes") { _, _ ->
         noteViewModel.deleteNotesSelected(selectedNote)
