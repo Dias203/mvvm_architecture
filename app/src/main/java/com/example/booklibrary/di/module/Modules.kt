@@ -2,6 +2,7 @@ package com.example.booklibrary.di.module
 
 import androidx.room.Room
 import com.example.booklibrary.data.database.NoteDatabase
+import com.example.booklibrary.data.model.NoteInstance
 import com.example.booklibrary.data.repository.NoteRepository
 import com.example.booklibrary.ui.view.screens.MainActivity
 import com.example.booklibrary.ui.view.screens.NewNoteActivity
@@ -19,8 +20,12 @@ val appModule = module {
             androidApplication(),
             NoteDatabase::class.java,
             "note_db"
-        ).build()
+        ).fallbackToDestructiveMigration() // Cần migration cho schema changes
+            .build()
     }
+
+    // API Service - Singleton
+    single { NoteInstance.noteService }
 
     // Scope cho MainActivity
     scope<MainActivity> {

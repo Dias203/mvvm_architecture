@@ -3,22 +3,141 @@ package com.example.booklibrary.data.repository
 import android.util.Log
 import com.example.booklibrary.data.database.NoteDatabase
 import com.example.booklibrary.data.model.Note
+import com.example.booklibrary.data.model.NoteInstance
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
 class NoteRepository(private val db: NoteDatabase) : KoinComponent {
-    fun insertNote(note: Note) = db.getNoteDao().insertNote(note)
-    fun deleteNote(note: Note) = db.getNoteDao().deleteNote(note)
 
-    fun deleteNotesSelected(notes: List<Note>) = db.getNoteDao().deleteNotesSelected(notes)
+    private val noteService = NoteInstance.noteService
 
-    fun deleteAllNotes() = db.getNoteDao().deleteAllNotes()
+    suspend fun insertNote(note: Note) = withContext(Dispatchers.IO) {
+        db.getNoteDao().insertNote(note)
+    }
 
-    fun updateNote(note: Note) {
-        Log.d("NoteRepository", "Updating note: $note")
+    suspend fun deleteNote(note: Note) = withContext(Dispatchers.IO) {
+        db.getNoteDao().deleteNote(note)
+    }
+
+    suspend fun deleteNotesSelected(notes: List<Note>) = withContext(Dispatchers.IO) {
+        db.getNoteDao().deleteNotesSelected(notes)
+    }
+
+    suspend fun deleteAllNotes() = withContext(Dispatchers.IO) {
+        db.getNoteDao().deleteAllNotes()
+    }
+
+    suspend fun updateNote(note: Note) = withContext(Dispatchers.IO) {
+        Log.d("DUC", "Updating note: $note")
         db.getNoteDao().updateNote(note)
     }
 
     fun getAllNotes() = db.getNoteDao().getAllNotes()
     fun searchNote(query: String) = db.getNoteDao().searchNote(query)
+
+    // Xử lý đồng bộ dữ liệu từ API và ROOM
+    suspend fun syncNotesFromApi(): Result<Unit> = withContext(Dispatchers.IO) {
+        try {
+            // Kiểm tra nếu Room trống thì mới call API
+            val localCount = db.getNoteDao().getNotesCount()
+            if (localCount == 0) {
+                Log.i("DUC", "Room is empty, fetching from API...")
+                val response = noteService.getNotes()
+
+                if (response.isSuccessful) {
+                    response.body()?.let { notes ->
+                        notes.forEach { note ->
+                            // Insert only if not exists
+                            val existingNote = db.getNoteDao().getNoteById(note.id)
+                            if (existingNote == null) {
+                                db.getNoteDao().insertNote(note.copy(isSynced = true))
+                            }
+                        }
+                    }
+                    Result.success(Unit)
+                } else {
+                    Result.failure(Exception("API call failed: ${response.code()}"))
+                }
+            } else {
+                Log.i("DUC", "Room has data, skipping API call")
+                Result.success(Unit)
+            }
+        } catch (e: Exception) {
+            Log.i("DUC", "Error syncing notes", e)
+            Result.failure(e)
+        }
+    }
+
+    suspend fun createNoteWithApi(note: Note): Result<Note> = withContext(Dispatchers.IO) {
+        try {
+            // Tạo note local trước (với ID tạm thời)
+            val localNote = note.copy(isLocalOnly = true, isSynced = false)
+            insertNote(localNote)
+
+            // Call API để tạo note trên server
+            val response = noteService.createNote(note)
+
+            if (response.isSuccessful) {
+                response.body()?.let { serverNote ->
+                    // Update với ID từ server
+                    val syncedNote = serverNote.copy(isSynced = true, isLocalOnly = false)
+                    db.getNoteDao().updateNote(syncedNote)
+                    Result.success(syncedNote)
+                } ?: Result.failure(Exception("Empty response body"))
+            } else {
+                Result.failure(Exception("Failed to create note on server: ${response.code()}"))
+            }
+        } catch (e: Exception) {
+            Log.i("DUC", "Error creating note", e)
+            Result.failure(e)
+        }
+    }
+
+    suspend fun updateNoteWithApi(note: Note): Result<Note> = withContext(Dispatchers.IO) {
+        try {
+            // Update local trước
+            updateNote(note.copy(isSynced = false))
+
+            // Call API để update trên server
+            val response = noteService.updateNote(note.id, note)
+
+            if (response.isSuccessful) {
+                response.body()?.let { serverNote ->
+                    val syncedNote = serverNote.copy(isSynced = true)
+                    updateNote(syncedNote)
+                    Result.success(syncedNote)
+                } ?: Result.failure(Exception("Empty response body"))
+            } else {
+                Result.failure(Exception("Failed to update note on server: ${response.code()}"))
+            }
+        } catch (e: Exception) {
+            Log.i("DUC", "Error updating note", e)
+            Result.failure(e)
+        }
+    }
+
+    suspend fun deleteNoteWithApi(note: Note): Result<Unit> = withContext(Dispatchers.IO) {
+        try {
+            // Delete local trước
+            deleteNote(note)
+
+            // Call API để delete trên server (chỉ khi note đã được đồng bộ)
+            if (!note.isLocalOnly) {
+                val response = noteService.deleteNote(note.id)
+
+                if (response.isSuccessful) {
+                    Result.success(Unit)
+                } else {
+                    Log.i("DUC", "Failed to delete note on server: ${response.code()}")
+                    Result.failure(Exception("Failed to delete note on server: ${response.code()}"))
+                }
+            } else {
+                Result.success(Unit)
+            }
+        } catch (e: Exception) {
+            Log.i("DUC", "Error deleting note", e)
+            Result.failure(e)
+        }
+    }
 }

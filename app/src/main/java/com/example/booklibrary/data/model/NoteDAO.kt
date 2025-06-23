@@ -1,29 +1,35 @@
-package com.example.booklibrary.data.database
+package com.example.booklibrary.data.model
+
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.example.booklibrary.data.model.Note
 
 @Dao
 interface NoteDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertNote(note: Note)
+    suspend fun insertNote(note: Note)
 
     @Update
-    fun updateNote(note: Note)
+    suspend fun updateNote(note: Note)
 
     @Delete
-    fun deleteNote(note: Note)
+    suspend fun deleteNote(note: Note)
 
     @Delete
-    fun deleteNotesSelected(notes: List<Note>)
+    suspend fun deleteNotesSelected(notes: List<Note>)
 
     @Query("DELETE FROM notes")
-    fun deleteAllNotes()
+    suspend fun deleteAllNotes()
 
     @Query("SELECT * FROM notes ORDER BY id DESC")
     fun getAllNotes(): LiveData<List<Note>>
 
     @Query("SELECT * FROM notes WHERE noteTitle LIKE :query OR noteBody LIKE :query")
-    fun searchNote(query: String?) : LiveData<List<Note>>
+    fun searchNote(query: String?): LiveData<List<Note>>
+
+    @Query("SELECT COUNT(*) FROM notes")
+    suspend fun getNotesCount(): Int
+
+    @Query("SELECT * FROM notes WHERE id = :id")
+    suspend fun getNoteById(id: Int): Note?
 }

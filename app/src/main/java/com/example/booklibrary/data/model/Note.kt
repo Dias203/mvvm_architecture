@@ -1,17 +1,32 @@
 package com.example.booklibrary.data.model
 
-import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-// Parcelable là một interface trong Android giúp serialize (biến đổi) một đối tượng
-// thành một chuỗi byte để "truyền dữ liệu giữa các thành phần trong ứng dụng (như Activity hoặc Fragment)."
 @Entity(tableName = "notes")
 data class Note(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    @PrimaryKey(autoGenerate = false)
+    @SerializedName("id")
+    val id: Int = 0,
+
+    @SerializedName("noteTitle")
     val noteTitle: String,
+
+    @SerializedName("noteBody")
     val noteBody: String,
-    var isSelected: Boolean = false
-):Serializable
+
+    @SerializedName("isSelected")
+    var isSelected: Boolean = false,
+
+    // Thêm field để theo dõi trạng thái đồng bộ
+    val isSynced: Boolean = false,
+    val isLocalOnly: Boolean = false // True nếu note chưa được tạo trên server
+): Serializable
+
+
+
+class Notes : ArrayList<Note>() {
+
+}
