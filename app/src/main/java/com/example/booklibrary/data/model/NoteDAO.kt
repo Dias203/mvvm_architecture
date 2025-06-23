@@ -9,6 +9,9 @@ interface NoteDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertNote(note: Note)
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertNoteIfNotExists(note: Note): Long
+
     @Update
     suspend fun updateNote(note: Note)
 

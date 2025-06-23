@@ -39,20 +39,15 @@ class NoteRepository(private val db: NoteDatabase) : KoinComponent {
     // Xử lý đồng bộ dữ liệu từ API và ROOM
     suspend fun syncNotesFromApi(): Result<Unit> = withContext(Dispatchers.IO) {
         try {
-            // Kiểm tra nếu Room trống thì mới call API
             val localCount = db.getNoteDao().getNotesCount()
             if (localCount == 0) {
                 Log.i("DUC", "Room is empty, fetching from API...")
                 val response = noteService.getNotes()
 
-                if (response.isSuccessful) {
+                return@withContext if (response.isSuccessful) {
                     response.body()?.let { notes ->
                         notes.forEach { note ->
-                            // Insert only if not exists
-                            val existingNote = db.getNoteDao().getNoteById(note.id)
-                            if (existingNote == null) {
-                                db.getNoteDao().insertNote(note.copy(isSynced = true))
-                            }
+                            db.getNoteDao().insertNoteIfNotExists(note.copy(isSynced = true))
                         }
                     }
                     Result.success(Unit)
@@ -61,13 +56,14 @@ class NoteRepository(private val db: NoteDatabase) : KoinComponent {
                 }
             } else {
                 Log.i("DUC", "Room has data, skipping API call")
-                Result.success(Unit)
+                return@withContext Result.success(Unit)
             }
         } catch (e: Exception) {
-            Log.i("DUC", "Error syncing notes", e)
-            Result.failure(e)
+            Log.e("DUC", "Error syncing notes", e)
+            return@withContext Result.failure(e)
         }
     }
+
 
     suspend fun createNoteWithApi(note: Note): Result<Note> = withContext(Dispatchers.IO) {
         try {
