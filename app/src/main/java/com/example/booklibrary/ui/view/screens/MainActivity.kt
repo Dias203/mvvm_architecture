@@ -2,59 +2,31 @@ package com.example.booklibrary.ui.view.screens
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.SearchView
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import com.example.booklibrary.R
 import com.example.booklibrary.databinding.ActivityMainBinding
-import com.example.booklibrary.ui.view.extensions.setClick
-import com.example.booklibrary.ui.view.extensions.setUI
-import com.example.booklibrary.ui.viewmodel.NoteViewModel
-import com.example.notetakingapp.adapter.NoteAdapter
-import org.koin.android.ext.android.inject
-import org.koin.android.scope.AndroidScopeComponent
-import org.koin.androidx.scope.activityScope
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.scope.Scope
 
-class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener, AndroidScopeComponent {
-
-    lateinit var binding: ActivityMainBinding
-    override val scope: Scope by activityScope()
-
-    val noteViewModel: NoteViewModel by viewModel()
-    val noteAdapter: NoteAdapter by inject()
-
+class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setUI()
-        setClick()
+        setClicked()
     }
 
-    override fun onQueryTextSubmit(query: String?): Boolean {
-        searchNote(query)
-        return false
-    }
-
-    override fun onQueryTextChange(newText: String?): Boolean {
-        if (newText != null) {
-            searchNote(newText)
+    private fun setClicked() {
+        binding.btnGoToNote.setOnClickListener {
+            startActivity(Intent(this, NoteActivity::class.java))
         }
-        return true
-    }
 
-    private fun searchNote(query: String?) {
-        val searchQuery = "%$query%"
-        noteViewModel.searchNote(searchQuery).observe(this) { list ->
-            noteAdapter.differ.submitList(list)
+        binding.btnGoToPhoto.setOnClickListener {
+            startActivity(Intent(this, PhotoActivity::class.java))
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        scope.close()
     }
 }

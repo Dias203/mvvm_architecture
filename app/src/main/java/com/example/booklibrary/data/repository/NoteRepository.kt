@@ -1,16 +1,16 @@
 package com.example.booklibrary.data.repository
 
 import android.util.Log
-import com.example.booklibrary.data.database.NoteDatabase
-import com.example.booklibrary.data.model.Note
-import com.example.booklibrary.data.model.NoteInstance
+import com.example.booklibrary.data.database.AppDatabase
+import com.example.booklibrary.data.model.note.Note
+import com.example.booklibrary.data.model.note.AppInstance
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 
-class NoteRepository(private val db: NoteDatabase) : KoinComponent {
+class NoteRepository(private val db: AppDatabase) : KoinComponent {
 
-    private val noteService = NoteInstance.noteService
+    private val noteService = AppInstance.noteService
 
     suspend fun insertNote(note: Note) = withContext(Dispatchers.IO) {
         db.getNoteDao().insertNote(note)

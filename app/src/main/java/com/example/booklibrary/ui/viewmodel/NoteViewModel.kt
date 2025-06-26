@@ -1,13 +1,17 @@
 package com.example.booklibrary.ui.viewmodel
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.booklibrary.data.model.Note
+import com.example.booklibrary.data.model.note.Note
 import com.example.booklibrary.data.repository.NoteRepository
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 
 class NoteViewModel(private val noteRepository: NoteRepository) : ViewModel(), KoinComponent {
+    private val _syncResult = MutableLiveData<Result<Unit>>()
+    fun syncNotesFromAPI(): LiveData<Result<Unit>> = _syncResult
 
     init {
         syncNotes()
@@ -15,7 +19,8 @@ class NoteViewModel(private val noteRepository: NoteRepository) : ViewModel(), K
 
     private fun syncNotes() {
         viewModelScope.launch {
-            noteRepository.syncNotesFromApi()
+            //noteRepository.syncNotesFromApi()
+            _syncResult.postValue(noteRepository.syncNotesFromApi())
         }
     }
 

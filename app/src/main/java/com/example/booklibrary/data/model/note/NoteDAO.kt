@@ -1,4 +1,4 @@
-package com.example.booklibrary.data.model
+package com.example.booklibrary.data.model.note
 
 
 import androidx.lifecycle.LiveData

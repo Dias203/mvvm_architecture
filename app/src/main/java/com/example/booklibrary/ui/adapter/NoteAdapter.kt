@@ -1,4 +1,4 @@
-package com.example.notetakingapp.adapter
+package com.example.booklibrary.ui.adapter
 
 import android.content.Intent
 import android.graphics.Color
@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.booklibrary.data.model.Note
+import com.example.booklibrary.data.model.note.Note
 import com.example.booklibrary.databinding.NoteLayoutBinding
 import com.example.booklibrary.ui.view.screens.UpdateNoteActivity
 import java.util.Random

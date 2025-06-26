@@ -1,13 +1,14 @@
-package com.example.booklibrary.data.model
+package com.example.booklibrary.data.model.note
 
+import com.example.booklibrary.data.model.photo.PhotoService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class NoteInstance {
+class AppInstance {
     companion object {
-        private const val BASE_URL = "https://jsonplaceholder.typicode.com"
+        private const val BASE_URL = "https://picsum.photos"
 
-        private val retrofit by lazy {
+        val retrofit by lazy {
             Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -16,6 +17,10 @@ class NoteInstance {
 
         val noteService: NoteService by lazy {
             retrofit.create(NoteService::class.java)
+        }
+
+        val photoService: PhotoService by lazy {
+            retrofit.create(PhotoService::class.java)
         }
     }
 }

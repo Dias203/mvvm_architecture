@@ -1,11 +1,8 @@
 package com.example.booklibrary.ui.view.screens
 
-import android.app.AlertDialog
-import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.booklibrary.data.model.Note
+import com.example.booklibrary.data.model.note.Note
 import com.example.booklibrary.databinding.ActivityUpdateNoteBinding
 import com.example.booklibrary.ui.view.extensions.getExtra
 import com.example.booklibrary.ui.view.extensions.setOnClick

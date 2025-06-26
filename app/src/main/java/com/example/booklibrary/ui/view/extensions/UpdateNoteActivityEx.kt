@@ -3,9 +3,8 @@ package com.example.booklibrary.ui.view.extensions
 import android.app.AlertDialog
 import android.content.Intent
 import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
-import com.example.booklibrary.data.model.Note
-import com.example.booklibrary.ui.view.screens.MainActivity
+import com.example.booklibrary.data.model.note.Note
+import com.example.booklibrary.ui.view.screens.NoteActivity
 import com.example.booklibrary.ui.view.screens.UpdateNoteActivity
 
 
@@ -53,7 +52,7 @@ fun UpdateNoteActivity.deleteNote() {
         setPositiveButton("Delete") { _, _ ->
             noteViewModel.deleteNote(currentNote)
             Toast.makeText(this@deleteNote, "Note was deleted", Toast.LENGTH_SHORT).show()
-            startActivity(Intent(this@deleteNote, MainActivity::class.java))
+            startActivity(Intent(this@deleteNote, NoteActivity::class.java))
             finish()
         }
         setNegativeButton("Cancel", null)
