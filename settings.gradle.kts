@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "BookLibrary"
+rootProject.name = "MVVM API ROOM KOIN"
 include(":app")
  

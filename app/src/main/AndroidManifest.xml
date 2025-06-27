@@ -17,14 +17,14 @@
         android:theme="@style/Theme.BookLibrary"
         tools:targetApi="31">
         <activity
-            android:name=".ui.view.screens.PhotoDetailActivity"
+            android:name=".ui.screens.photo_detail.PhotoDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.view.screens.PhotoActivity"
+            android:name=".ui.screens.photo.PhotoActivity"
             android:exported="false"
             android:theme="@style/Theme.BookLibrary" />
         <activity
-            android:name=".ui.view.screens.MainActivity"
+            android:name=".ui.screens.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,12 +32,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.view.screens.NewNoteActivity" />
+        <activity android:name=".ui.screens.new_note.NewNoteActivity" />
         <activity
-            android:name=".ui.view.screens.UpdateNoteActivity"
+            android:name=".ui.screens.update_note.UpdateNoteActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.view.screens.NoteActivity"
+            android:name=".ui.screens.note.NoteActivity"
             android:exported="true">
             <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />

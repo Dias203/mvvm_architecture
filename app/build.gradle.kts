@@ -69,4 +69,5 @@ dependencies {
 
     implementation (libs.glide)
     implementation(libs.androidx.paging.runtime)
+    implementation (libs.androidx.room.paging)
 }

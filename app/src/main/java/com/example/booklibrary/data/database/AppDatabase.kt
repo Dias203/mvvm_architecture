@@ -7,8 +7,6 @@ import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.booklibrary.data.model.note.Note
-import com.example.booklibrary.data.model.note.NoteDAO
-import com.example.booklibrary.data.model.photo.PhotoDAO
 import com.example.booklibrary.data.model.photo.PhotoItem
 
 @Database(entities = [Note::class, PhotoItem::class], version = 5, exportSchema = false)
