@@ -14,7 +14,12 @@
         android:theme="@style/Theme.BookLibrary"
         tools:targetApi="31">
         <activity
-            android:name=".ui.view.screens.SplashActivity"
+            android:name=".ui.view.screens.NewNoteActivity"/>
+        <activity
+            android:name=".ui.view.screens.UpdateNoteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.view.screens.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,17 +27,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.view.screens.NewNoteActivity" />
-        <activity
-            android:name=".ui.view.screens.UpdateNoteActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.view.screens.MainActivity"
-            android:exported="true">
-        </activity>
-        <meta-data
-            android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713" />
     </application>
 
 </manifest>
