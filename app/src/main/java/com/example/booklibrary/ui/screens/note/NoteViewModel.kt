@@ -13,7 +13,6 @@ import org.koin.core.component.KoinComponent
 class NoteViewModel(private val noteRepository: NoteRepository) : ViewModel(), KoinComponent {
     private val _syncResult = MutableLiveData<Result<Unit>>()
     val syncNotesFromAPI: LiveData<Result<Unit>> = _syncResult
-
     private val _searchLive = MutableLiveData<List<Note>>(null)
     val searchLive: LiveData<List<Note>> = _searchLive
 

@@ -17,7 +17,6 @@ class NoteActivity : AppCompatActivity(), SearchView.OnQueryTextListener, Androi
         ActivityNoteBinding.inflate(layoutInflater)
     }
     override val scope: Scope by activityScope()
-
     val noteViewModel: NoteViewModel by viewModel()
     val noteAdapter: NoteAdapter by inject()
 
