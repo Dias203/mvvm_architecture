@@ -24,7 +24,6 @@ class PhotoAdapter(private val context: Context) : RecyclerView.Adapter<Recycler
     private var isLoadingAdded = false
 
     fun setData(newData: List<PhotoItem>) {
-        ECOLog.showLog("-4")
         val diffResult = DiffUtil.calculateDiff(PhotoDiffCallback(photos, newData))
         photos.clear()
         photos.addAll(newData)
@@ -32,7 +31,6 @@ class PhotoAdapter(private val context: Context) : RecyclerView.Adapter<Recycler
     }
 
     fun addData(newItems: List<PhotoItem>) {
-        ECOLog.showLog("-5")
         val oldList = ArrayList(photos)
         if (isLoadingAdded && photos.isNotEmpty() && photos.last() == null) {
             photos.removeAt(photos.size - 1)
@@ -49,7 +47,6 @@ class PhotoAdapter(private val context: Context) : RecyclerView.Adapter<Recycler
     }
 
     fun addLoadingFooter() {
-        ECOLog.showLog("-6 | size: ${photos.size}")
         if (!isLoadingAdded) {
             isLoadingAdded = true
             photos.add(null)
@@ -58,7 +55,6 @@ class PhotoAdapter(private val context: Context) : RecyclerView.Adapter<Recycler
     }
 
     fun removeLoadingFooter() {
-        ECOLog.showLog("-7")
         if (isLoadingAdded && photos.isNotEmpty() && photos.last() == null) {
             val position = photos.size - 1
             photos.removeAt(position)

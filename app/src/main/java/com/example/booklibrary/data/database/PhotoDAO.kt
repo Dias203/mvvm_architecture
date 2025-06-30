@@ -15,6 +15,9 @@ interface PhotoDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPhoto(photo: PhotoItem)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertPhotos(photos: List<PhotoItem>)
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertPhotoIfPhotoExists(photo: PhotoItem): Long
 
@@ -30,8 +33,9 @@ interface PhotoDAO {
     @Query("DELETE FROM photos")
     suspend fun deleteAllPhotos()
 
-    /*@Query("SELECT * FROM photos ORDER BY id DESC")
-    fun getAllPhotos(): LiveData<List<PhotoItem>>*/
+    @Query("SELECT * FROM photos")
+    fun getAllPhotosOnce(): List<PhotoItem>
+
     @Query("SELECT * FROM photos ORDER BY id ASC")
     fun getAllPhotosPaging(): PagingSource<Int, PhotoItem>
 

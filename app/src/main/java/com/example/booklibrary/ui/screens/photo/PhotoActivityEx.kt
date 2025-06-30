@@ -38,8 +38,8 @@ fun PhotoActivity.setupRecyclerView() {
         })
     }
 
-    // Load dữ liệu ban đầu
-    photoViewModel.loadInitialPhotos { initialList ->
+
+    photoViewModel.loadPhotosFromRoomIfAvailable { initialList ->
         photoAdapter.setData(initialList)
     }
 }
