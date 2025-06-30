@@ -23,6 +23,7 @@ class NewNoteActivity : AppCompatActivity(), AndroidScopeComponent {
         setContentView(binding.root)
 
         setClick()
+        noteViewModel.syncNotes()
     }
 
 

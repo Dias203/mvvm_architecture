@@ -24,6 +24,7 @@ class UpdateNoteActivity : AppCompatActivity(), AndroidScopeComponent {
 
         getExtra()
         setOnClick()
+        noteViewModel.syncNotes()
     }
 
     override fun onDestroy() {

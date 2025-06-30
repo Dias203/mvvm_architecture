@@ -18,6 +18,7 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <FrameLayout
+        android:visibility="gone"
         android:id="@+id/progressLoading"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

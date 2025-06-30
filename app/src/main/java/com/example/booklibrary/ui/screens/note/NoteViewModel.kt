@@ -17,9 +17,9 @@ class NoteViewModel(private val noteRepository: NoteRepository) : ViewModel(), K
     private val _searchLive = MutableLiveData<List<Note>>(null)
     val searchLive: LiveData<List<Note>> = _searchLive
 
-    init {
+    /*init {
         syncNotes()
-    }
+    }*/
 
     fun syncNotes() {
         viewModelScope.launch {

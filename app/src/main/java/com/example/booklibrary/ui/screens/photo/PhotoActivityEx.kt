@@ -1,57 +1,62 @@
 package com.example.booklibrary.ui.screens.photo
 
+
 import android.view.View
 import android.widget.Toast
-import androidx.core.view.isVisible
-import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
-import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.booklibrary.ui.load_state.adapter.PhotoLoadStateAdapter
-import com.example.booklibrary.utils.ECOLog
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
+import androidx.recyclerview.widget.RecyclerView
 
 fun PhotoActivity.setupRecyclerView() {
     binding.listPhoto.apply {
         layoutManager = GridLayoutManager(this@setupRecyclerView, 3, GridLayoutManager.VERTICAL, false).apply {
             spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {
-                    // Nếu item tại position là footer (LoadStateAdapter), chiếm toàn bộ số cột
-                    return if (adapter?.getItemViewType(position) == photoAdapter.getItemViewType(position)) 1 else 3
+                    return if (photoAdapter.getItemViewType(position) == photoAdapter.VIEW_TYPE_LOADING) 3 else 1
                 }
             }
+
         }
-        adapter = photoAdapter.withLoadStateFooter(
-            footer = PhotoLoadStateAdapter { photoAdapter.retry() }
-        )
-    }
+        adapter = photoAdapter
 
-    lifecycleScope.launch {
-        photoViewModel.flow.collectLatest { pagingData ->
-            ECOLog.showLog("9998887")
-            photoAdapter.submitData(pagingData)
-        }
-    }
+        // Thêm OnScrollListener để phát hiện LoadMore
+        addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val layoutManager = layoutManager as GridLayoutManager
+                val totalItemCount = layoutManager.itemCount
+                val lastVisibleItem = layoutManager.findLastVisibleItemPosition()
 
-    lifecycleScope.launch {
-        photoAdapter.loadStateFlow.collectLatest { loadStates ->
-            val isLoading = loadStates.refresh is LoadState.Loading
-            binding.progressLoading.isVisible = isLoading
-
-            val isError = loadStates.refresh is LoadState.Error
-            if (isError) {
-                val error = (loadStates.refresh as LoadState.Error).error
-                Toast.makeText(this@setupRecyclerView, "Lỗi: ${error.localizedMessage}", Toast.LENGTH_SHORT).show()
+                // Kiểm tra nếu cuộn đến gần cuối danh sách (cách 5 item) và không đang tải
+                if (!photoViewModel.isLoading && !photoViewModel.isLastPage && lastVisibleItem + 5 >= totalItemCount) {
+                    photoAdapter.addLoadingFooter()
+                    photoViewModel.loadMorePhotos { newItems ->
+                        photoAdapter.removeLoadingFooter()
+                        photoAdapter.addData(newItems)
+                    }
+                }
             }
-        }
+        })
+    }
+
+    // Load dữ liệu ban đầu
+    photoViewModel.loadInitialPhotos { initialList ->
+        photoAdapter.setData(initialList)
     }
 }
 
-fun PhotoActivity.loadStateListener() {
-    photoAdapter.addLoadStateListener { loadStates ->
-        val isLoading = loadStates.source.refresh is LoadState.Loading
-        ECOLog.showLog("Loading state: $isLoading")
-        binding.progressLoading.visibility = if (isLoading) View.VISIBLE else View.GONE
+fun PhotoActivity.registerListener() {
+    photoViewModel.listener = object : PhotoListener {
+        override fun isLoading() {
+            binding.progressLoading.visibility = View.VISIBLE
+        }
+
+        override fun isLoaded() {
+            binding.progressLoading.visibility = View.GONE
+        }
+
+        override fun isLoadFail() {
+            Toast.makeText(this@registerListener, "Load Fail", Toast.LENGTH_SHORT).show()
+        }
+
     }
 }
