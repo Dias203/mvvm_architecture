@@ -110,25 +110,4 @@ class PhotoAdapter(private val context: Context) : RecyclerView.Adapter<Recycler
             binding.errorMsg.isVisible = false
         }
     }
-
-
-    /*class PhotoDiffCallback(
-        private val oldList: List<PhotoItem?>,
-        private val newList: List<PhotoItem?>
-    ) : DiffUtil.Callback() {
-        override fun getOldListSize() = oldList.size
-        override fun getNewListSize() = newList.size
-
-        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            val old = oldList[oldItemPosition]
-            val new = newList[newItemPosition]
-            return old?.id == new?.id
-        }
-
-        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            val old = oldList[oldItemPosition]
-            val new = newList[newItemPosition]
-            return old == new
-        }
-    }*/
 }
