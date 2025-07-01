@@ -68,28 +68,4 @@ class PhotoViewModel(
         if (isLoading || isLastPage) return
         loadPhotos(onLoaded)
     }
-
-    fun loadPhotosFromRoomIfAvailable(onLoaded: (List<PhotoItem>) -> Unit) {
-        listener?.isLoading()
-        viewModelScope.launch {
-            val localPhotos = withContext(Dispatchers.IO) {
-                photoRepository.getAllPhotos()
-            }
-
-            if (localPhotos.isNotEmpty()) {
-                loadedPhotos.clear()
-                loadedPhotos.addAll(localPhotos)
-                _photos.postValue(loadedPhotos)
-                onLoaded(localPhotos)
-                listener?.isLoaded()
-            } else {
-                loadInitialPhotos { newData ->
-                    viewModelScope.launch {
-                        photoRepository.insertPhotos(newData)
-                    }
-                }
-            }
-        }
-    }
-
 }
