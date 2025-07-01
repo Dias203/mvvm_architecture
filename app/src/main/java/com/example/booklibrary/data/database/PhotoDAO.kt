@@ -34,7 +34,7 @@ interface PhotoDAO {
     suspend fun deleteAllPhotos()
 
     @Query("SELECT * FROM photos")
-    fun getAllPhotosOnce(): List<PhotoItem>
+    fun getAllPhotos(): List<PhotoItem>
 
     @Query("SELECT * FROM photos ORDER BY id ASC")
     fun getAllPhotosPaging(): PagingSource<Int, PhotoItem>

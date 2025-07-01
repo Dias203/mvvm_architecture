@@ -22,26 +22,21 @@ class PhotoAdapter(private val context: Context) : RecyclerView.Adapter<Recycler
     private var isLoadingAdded = false
 
     fun setData(newData: List<PhotoItem>) {
-        val diffResult = DiffUtil.calculateDiff(PhotoDiffCallback(photos, newData))
         photos.clear()
         photos.addAll(newData)
-        diffResult.dispatchUpdatesTo(this)
+        notifyDataSetChanged()
     }
 
+
     fun addData(newItems: List<PhotoItem>) {
-        val oldList = ArrayList(photos)
-        if (isLoadingAdded && photos.isNotEmpty() && photos.last() == null) {
+        val start = photos.size
+        if (isLoadingAdded && photos.lastOrNull() == null) {
             photos.removeAt(photos.size - 1)
+            notifyItemRemoved(photos.size)
             isLoadingAdded = false
         }
-
-        val updatedList = ArrayList(photos)
-        updatedList.addAll(newItems)
-
-        val diffResult = DiffUtil.calculateDiff(PhotoDiffCallback(oldList, updatedList))
-        photos.clear()
-        photos.addAll(updatedList)
-        diffResult.dispatchUpdatesTo(this)
+        photos.addAll(newItems)
+        notifyItemRangeInserted(start, newItems.size)
     }
 
     fun addLoadingFooter() {
@@ -93,6 +88,8 @@ class PhotoAdapter(private val context: Context) : RecyclerView.Adapter<Recycler
         fun bind(photoItem: PhotoItem) {
             binding.tvPhotoTitle.text = photoItem.author
             Glide.with(context)
+                .clear(binding.imgView)
+            Glide.with(context)
                 .load(photoItem.downloadUrl)
                 .into(binding.imgView)
 
@@ -115,7 +112,7 @@ class PhotoAdapter(private val context: Context) : RecyclerView.Adapter<Recycler
     }
 
 
-    class PhotoDiffCallback(
+    /*class PhotoDiffCallback(
         private val oldList: List<PhotoItem?>,
         private val newList: List<PhotoItem?>
     ) : DiffUtil.Callback() {
@@ -133,5 +130,5 @@ class PhotoAdapter(private val context: Context) : RecyclerView.Adapter<Recycler
             val new = newList[newItemPosition]
             return old == new
         }
-    }
+    }*/
 }

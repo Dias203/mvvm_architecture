@@ -39,7 +39,7 @@ fun PhotoActivity.setupRecyclerView() {
     }
 
 
-    photoViewModel.loadPhotosFromRoomIfAvailable { initialList ->
+    photoViewModel.loadInitialPhotos { initialList ->
         photoAdapter.setData(initialList)
     }
 }
