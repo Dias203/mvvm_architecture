@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.booklibrary.data.model.photo.PhotoItem
 import com.example.booklibrary.databinding.PhotoLayoutBinding
-import com.example.booklibrary.ui.screens.photo_detail.PhotoDetailActivity
+import com.example.booklibrary.ui.screens.photoDetail.PhotoDetailActivity
 
 class PhotoAdapter(private val context: Context) : PagingDataAdapter<PhotoItem, PhotoAdapter.PhotoViewHolder>(
     PhotoDiffCallback()

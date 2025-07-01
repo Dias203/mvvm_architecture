@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.screens.update_note.UpdateNoteActivity">
+    tools:context=".ui.screens.updateNote.UpdateNoteActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -1,4 +1,4 @@
-package com.example.booklibrary.ui.screens.update_note
+package com.example.booklibrary.ui.screens.updateNote
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

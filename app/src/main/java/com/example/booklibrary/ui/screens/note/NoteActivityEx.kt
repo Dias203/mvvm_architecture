@@ -6,7 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.booklibrary.data.model.note.Note
-import com.example.booklibrary.ui.screens.new_note.NewNoteActivity
+import com.example.booklibrary.ui.screens.newNote.NewNoteActivity
 
 
 fun NoteActivity.setUI() {
