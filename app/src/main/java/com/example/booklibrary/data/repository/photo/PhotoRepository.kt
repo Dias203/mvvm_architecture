@@ -14,4 +14,6 @@ class PhotoRepository(
         db.getPhotoDao().insertPhotos(photos)
     }
     fun getAllPhotos() = db.getPhotoDao().getAllPhotos()
+
+    suspend fun getCountPhotos() = db.getPhotoDao().getPhotosCount()
 }

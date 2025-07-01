@@ -3,9 +3,8 @@ package com.example.booklibrary.ui.screens.photo.adapter
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.booklibrary.data.model.photo.PhotoItem
@@ -30,11 +29,7 @@ class PhotoAdapter(private val context: Context) : RecyclerView.Adapter<Recycler
 
     fun addData(newItems: List<PhotoItem>) {
         val start = photos.size
-        if (isLoadingAdded && photos.lastOrNull() == null) {
-            photos.removeAt(photos.size - 1)
-            notifyItemRemoved(photos.size)
-            isLoadingAdded = false
-        }
+        removeLoadingFooter()
         photos.addAll(newItems)
         notifyItemRangeInserted(start, newItems.size)
     }
@@ -47,7 +42,7 @@ class PhotoAdapter(private val context: Context) : RecyclerView.Adapter<Recycler
         }
     }
 
-    fun removeLoadingFooter() {
+    private fun removeLoadingFooter() {
         if (isLoadingAdded && photos.isNotEmpty() && photos.last() == null) {
             val position = photos.size - 1
             photos.removeAt(position)
@@ -88,8 +83,6 @@ class PhotoAdapter(private val context: Context) : RecyclerView.Adapter<Recycler
         fun bind(photoItem: PhotoItem) {
             binding.tvPhotoTitle.text = photoItem.author
             Glide.with(context)
-                .clear(binding.imgView)
-            Glide.with(context)
                 .load(photoItem.downloadUrl)
                 .into(binding.imgView)
 
@@ -105,9 +98,9 @@ class PhotoAdapter(private val context: Context) : RecyclerView.Adapter<Recycler
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind() {
-            binding.progressBar.isVisible = true
-            binding.retryButton.isVisible = false
-            binding.errorMsg.isVisible = false
+            binding.progressBar.visibility = View.VISIBLE
+            binding.retryButton.visibility = View.GONE
+            binding.errorMsg.visibility = View.GONE
         }
     }
 }

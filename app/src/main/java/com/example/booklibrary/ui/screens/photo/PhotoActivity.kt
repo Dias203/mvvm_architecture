@@ -1,7 +1,6 @@
 package com.example.booklibrary.ui.screens.photo
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.booklibrary.databinding.ActivityPhotoBinding
 import com.example.booklibrary.ui.screens.photo.adapter.PhotoAdapter
@@ -17,12 +16,14 @@ class PhotoActivity : AppCompatActivity(), AndroidScopeComponent {
     val photoAdapter: PhotoAdapter by inject()
     val photoViewModel: PhotoViewModel by viewModel()
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPhotoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        registerListener()
+        loadInitialData()
+        registerDataState()
         setupRecyclerView()
     }
 

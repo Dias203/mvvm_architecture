@@ -1,11 +1,13 @@
 package com.example.booklibrary.ui.screens.photo
 
+import android.provider.ContactsContract.Contacts.Photo
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.booklibrary.data.model.photo.PhotoItem
 import com.example.booklibrary.data.api.PhotoService
+import com.example.booklibrary.data.model.DataState
 import com.example.booklibrary.data.repository.photo.PhotoRepository
 import com.example.booklibrary.utils.ECOLog
 import kotlinx.coroutines.Dispatchers
@@ -16,8 +18,9 @@ class PhotoViewModel(
     private val photoRepository: PhotoRepository,
     private val photoService: PhotoService,
 ) : ViewModel() {
+    private val _dataSate = MutableLiveData<DataState<List<PhotoItem>>>()
+    val dataState: LiveData<DataState<List<PhotoItem>>> = _dataSate
 
-    var listener: PhotoListener? = null
 
     private val _photos = MutableLiveData<List<PhotoItem>>()
     val photos: LiveData<List<PhotoItem>> = _photos
@@ -26,11 +29,12 @@ class PhotoViewModel(
     private val pageSize = 20
     var isLoading = false
     var isLastPage = false
+    var loaded = false
 
     private val loadedPhotos = mutableListOf<PhotoItem>()
 
     fun loadInitialPhotos(onLoaded: (List<PhotoItem>) -> Unit) {
-        listener?.isLoading()
+        _dataSate.postValue(DataState.Loading(isLoading = true))
         currentPage = 1
         isLastPage = false
         loadedPhotos.clear()
@@ -53,13 +57,14 @@ class PhotoViewModel(
                     } else {
                         currentPage++
                     }
+                    _dataSate.postValue(DataState.Loaded(data = loadedPhotos))
                 }
             } catch (e: Exception) {
-                listener?.isLoadFail()
+                _dataSate.postValue(DataState.Error(e))
                 ECOLog.showLog("Exception: $e")
             } finally {
                 isLoading = false
-                listener?.isLoaded()
+                //_dataSate.postValue(DataState.Loading(isLoading = false))
             }
         }
     }
