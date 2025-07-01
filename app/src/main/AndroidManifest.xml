@@ -17,7 +17,7 @@
         android:theme="@style/Theme.BookLibrary"
         tools:targetApi="31">
         <activity
-            android:name=".ui.screens.photo_detail.PhotoDetailActivity"
+            android:name=".ui.screens.photoDetail.PhotoDetailActivity"
             android:exported="false" />
         <activity
             android:name=".ui.screens.photo.PhotoActivity"
@@ -32,9 +32,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.screens.new_note.NewNoteActivity" />
+        <activity android:name=".ui.screens.newNote.NewNoteActivity" />
         <activity
-            android:name=".ui.screens.update_note.UpdateNoteActivity"
+            android:name=".ui.screens.updateNote.UpdateNoteActivity"
             android:exported="false" />
         <activity
             android:name=".ui.screens.note.NoteActivity"

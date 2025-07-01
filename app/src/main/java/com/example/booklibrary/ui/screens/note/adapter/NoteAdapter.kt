@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.booklibrary.data.model.note.Note
 import com.example.booklibrary.databinding.NoteLayoutBinding
-import com.example.booklibrary.ui.screens.update_note.UpdateNoteActivity
+import com.example.booklibrary.ui.screens.updateNote.UpdateNoteActivity
 import java.util.Random
 
 class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {

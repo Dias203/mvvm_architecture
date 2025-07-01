@@ -1,4 +1,4 @@
-package com.example.booklibrary.ui.screens.photo_detail
+package com.example.booklibrary.ui.screens.photoDetail
 
 import android.widget.Toast
 import com.bumptech.glide.Glide

@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -12,8 +11,7 @@ import com.bumptech.glide.Glide
 import com.example.booklibrary.data.model.photo.PhotoItem
 import com.example.booklibrary.databinding.LoadStateItemBinding
 import com.example.booklibrary.databinding.PhotoLayoutBinding
-import com.example.booklibrary.ui.screens.photo_detail.PhotoDetailActivity
-import com.example.booklibrary.utils.ECOLog
+import com.example.booklibrary.ui.screens.photoDetail.PhotoDetailActivity
 
 class PhotoAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

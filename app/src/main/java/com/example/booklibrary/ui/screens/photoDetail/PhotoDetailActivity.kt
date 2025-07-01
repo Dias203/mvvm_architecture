@@ -1,4 +1,4 @@
-package com.example.booklibrary.ui.screens.photo_detail
+package com.example.booklibrary.ui.screens.photoDetail
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

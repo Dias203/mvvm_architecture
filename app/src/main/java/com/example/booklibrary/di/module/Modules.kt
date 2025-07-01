@@ -8,8 +8,8 @@ import com.example.booklibrary.data.database.AppDatabase
 import com.example.booklibrary.data.repository.note.NoteRepository
 import com.example.booklibrary.data.repository.photo.PhotoRepository
 import com.example.booklibrary.ui.screens.note.NoteActivity
-import com.example.booklibrary.ui.screens.new_note.NewNoteActivity
-import com.example.booklibrary.ui.screens.update_note.UpdateNoteActivity
+import com.example.booklibrary.ui.screens.newNote.NewNoteActivity
+import com.example.booklibrary.ui.screens.updateNote.UpdateNoteActivity
 import com.example.booklibrary.ui.screens.note.NoteViewModel
 import com.example.booklibrary.ui.screens.note.adapter.NoteAdapter
 import com.example.booklibrary.ui.screens.photo.PhotoActivity
